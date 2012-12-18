@@ -38,10 +38,10 @@ nosetests.xml
 .cache/
 src/StudentsSocialNotifier/__pycache__/
 env/
-#log/*
-#config/*
-#config/*/app.yml
-#config/dev/app.yml
-#config/prod/app.yml
+log/*
+config/*
+config/*/app.yml
+config/dev/app.yml
+config/prod/app.yml
 *.py.bak
 .hidden
