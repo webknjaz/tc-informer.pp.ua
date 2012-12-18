@@ -1,0 +1,9 @@
+directory: /home/wk/private/kpi/4.1/pm/tc-informer.pp.ua/static
+url: /
+
+bundles:
+  screen_css:
+    filters: yui_css
+    output: css/screen.css
+    contents:
+      - css/screen.css

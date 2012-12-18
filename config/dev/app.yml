@@ -1,0 +1,44 @@
+project_metadata:
+  package: StudentsSocialNotifier
+
+global:
+  engine.logging.on: true
+  engine.sqlalchemy.on: true
+
+controllers:
+  '':
+    controller: !!python/name:StudentsSocialNotifier.controller.Root
+    /:
+      tools.orm_session.on: true
+      tools.sessions.on: true
+      tools.staticdir.root: /home/wk/private/kpi/4.1/pm/tc-informer.pp.ua/static
+      tools.staticfile.root: /home/wk/private/kpi/4.1/pm/tc-informer.pp.ua/static
+    /css:
+      tools.sessions.on: false
+      tools.staticdir.on: true
+      tools.staticdir.dir: css
+    /js:
+      tools.sessions.on: false
+      tools.staticdir.on: true
+      tools.staticdir.dir: js
+    /img:
+      tools.sessions.on: false
+      tools.staticdir.on: true
+      tools.staticdir.dir: img
+    /favicon.ico:
+      tools.sessions.on: false
+      tools.staticfile.on: true
+      tools.staticfile.filename: favicon.ico
+
+sqlalchemy_engine:
+  url: mysql+mysqlconnector://ssn_app:<PWD>@localhost/StudentsSocialNotifier
+  pool_recycle: 60
+
+jinja2:
+  loader: !!python/object:jinja2.loaders.FileSystemLoader
+          encoding: utf-8
+          searchpath: [/home/wk/private/kpi/4.1/pm/tc-informer.pp.ua/src/StudentsSocialNotifier/templates]
+  bytecode_cache: !!python/object:jinja2.bccache.FileSystemBytecodeCache {directory: /home/wk/private/kpi/4.1/pm/tc-informer.pp.ua/.cache,
+                                                                          pattern: __jinja2_%s.cache}
+  auto_reload: true
+  use_webassets: true
