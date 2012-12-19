@@ -6,6 +6,7 @@ from hashlib import sha256
 
 from sqlalchemy import Column, Integer, UnicodeText, Date, DateTime, String, \
     BigInteger, Enum, SmallInteger, func, text
+
 from sqlalchemy.orm import deferred
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -25,17 +26,20 @@ class User(Base):
     however you want.
     """
 
-    __tablename__ = "user"
+    __tablename__ = "users"
 
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    fbid = Column(BigInteger, unique=True, index=True)
+    #fbid = Column(BigInteger, unique=True, index=True)
     username = Column(UnicodeText, unique=True, index=True)
+    vk_id = Column(BigInteger, unique=True, index=True)
+    full_name = Column(UnicodeText, nullable=True)
     displayname = Column(UnicodeText, nullable=False)
-    email = Column(UnicodeText, unique=True, nullable=False, index=True)
+    #email = Column(UnicodeText, unique=True, nullable=False, index=True)
+    is_admin = Column(Boolean, default=False)
 
     _salt = Column("salt", String(12))
 
@@ -68,7 +72,7 @@ class User(Base):
         :type salt: an 8-byte long cryptographically random byte string
         """
 
-        if isinstance(password, str):
+        if isinstance(password, unicode):
             password_bytes = password.encode("UTF-8")
         else:
             password_bytes = password
@@ -78,7 +82,7 @@ class User(Base):
         hashed_password.update(salt)
         hashed_password = hashed_password.hexdigest()
 
-        if not isinstance(hashed_password, str):
+        if not isinstance(hashed_password, unicode):
             hashed_password = hashed_password.decode("UTF-8")
 
         return hashed_password
@@ -102,29 +106,29 @@ class User(Base):
         return self.password == self.__encrypt_password(password,
                                                         b64decode(str(self.salt)))
 
-    sex = Column(Enum("m", "f", name="sex"))
-    date_of_birth = Column(Date)
-    bio = deferred(Column(UnicodeText))
+    #sex = Column(Enum("m", "f", name="sex"))
+    #date_of_birth = Column(Date)
+    #bio = deferred(Column(UnicodeText))
 
-    @hybrid_property
-    def age(self):
-        """Property calculated from (current time - :attr:`User.date_of_birth` - leap days)"""
-        if self.date_of_birth:
-            today = (datetime.utcnow() + timedelta(hours=self.timezone)).date()
-            birthday = self.date_of_birth
-            if isinstance(birthday, datetime):
-                birthday = birthday.date()
-            age = today - (birthday or (today - timedelta(1)))
-            return (age.days - calendar.leapdays(birthday.year, today.year)) / 365
-        return -1
+    #@hybrid_property
+    #def age(self):
+    #    """Property calculated from (current time - :attr:`User.date_of_birth` - leap days)"""
+    #    if self.date_of_birth:
+    #        today = (datetime.utcnow() + timedelta(hours=self.timezone)).date()
+    #        birthday = self.date_of_birth
+    #        if isinstance(birthday, datetime):
+    #            birthday = birthday.date()
+    #        age = today - (birthday or (today - timedelta(1)))
+    #        return (age.days - calendar.leapdays(birthday.year, today.year)) / 365
+    #    return -1
 
-    @age.expression
-    def age(cls):
-        return func.date_part("year", func.age(cls.date_of_birth))
+    #@age.expression
+    #def age(cls):
+    #    return func.date_part("year", func.age(cls.date_of_birth))
 
-    locale = Column(String(10))
-    timezone = Column(SmallInteger)
+    #locale = Column(String(10))
+    #timezone = Column(SmallInteger)
 
-    created = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
-    lastmodified = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
-    lastaccessed = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
+    #created = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
+    #lastmodified = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
+    #lastaccessed = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
