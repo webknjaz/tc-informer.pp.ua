@@ -1,56 +1,74 @@
-pip install https://bitbucket.org/webknjaz/blueberrypy-wk/get/ced830f454e1.zip
-2to3 -w env/lib64/python3.2/site-packages/blueberrypy
-2to3 -w env/lib64/python3.2/site-packages/dateutil
+##Students Informer
 
+###Setting up environment
 
-[tc-informer] (py3k)
-┌─(wk@middle-earth:pts/2)─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(~/private/kpi/4.1/pm/tc-informer.pp.ua)─┐
-└─(1:3:00:%)── blueberrypy create                                                                                                                                                                                             ──(вт,гру18)─┘
-Project name: Students Informer
-Package name: StudentsSocialNotifier
-Version (PEP 386): 1.0
-Author name: Svyatoslav Sydorenko
-Email: wk@sydorenko.pp.ua
-Use controllers backed by a templating engine? [Y/n]
-Use RESTful controllers? [y/N]
-Use Jinja2 templating engine? [Y/n]
-Use webassets asset management framework? [Y/n]
-Use redis session? [y/N]
-Use SQLAlchemy ORM? [Y/n]
-SQLAlchemy database connection URL: mysql+mysqlconnector://ssn_app:LJ%h73yH)$mKML#T^kDF93@localhost/StudentsSocialNotifier
+    # emerge -avu dev-lang/python:3 virtualenv
+    $ git clone git@github.com:webknjaz/tc-informer.pp.ua.git
+    $ cd tc-informer.pp.ua
+      Create virtualenv:
+    $ virtualenv --prompt "[tc-informer] (py3k)
+    " -p python3.2 --clear env
+      and activate it:
+    $ source env/bin/activate
+      Install required packages then:
+    $ pip install https://bitbucket.org/webknjaz/blueberrypy-wk/get/ced830f454e1.zip
+    $ pip install mysql-connector-python webassets
+    $ 2to3 -w env/lib64/python3.2/site-packages/{blueberrypy,dateutil,webassets}
 
-===========================================================================
-Your project skeleton has been created under /home/wk/private/kpi/4.1/pm/tc-informer.pp.ua.
+###Note: Project creation log
 
-Subsystems chosen
------------------
-Routes (RESTful controllers): False
-Jinja2: True
-webassets: True
-redis: False
-SQLAlchemy: True
+    [tc-informer] (py3k)
+    ┌─(wk@middle-earth:pts/2)─────────────────────────────────────────────────────(~/private/kpi/4.1/pm/tc-informer.pp.ua)─┐
+    └─(1:3:00:%)── blueberrypy create                                                                         ──(вт,гру18)─┘
+    Project name: Students Informer
+    Package name: StudentsSocialNotifier
+    Version (PEP 386): 1.0
+    Author name: Svyatoslav Sydorenko
+    Email: wk@sydorenko.pp.ua
+    Use controllers backed by a templating engine? [Y/n]
+    Use RESTful controllers? [y/N]
+    Use Jinja2 templating engine? [Y/n]
+    Use webassets asset management framework? [Y/n]
+    Use redis session? [y/N]
+    Use SQLAlchemy ORM? [Y/n]
+    SQLAlchemy database connection URL: mysql+mysqlconnector://ssn_app:<PASSWD>@localhost/StudentsSocialNotifier
+    
+    ===========================================================================
+    Your project skeleton has been created under /home/wk/private/kpi/4.1/pm/tc-informer.pp.ua.
+    
+    Subsystems chosen
+    -----------------
+    Routes (RESTful controllers): False
+    Jinja2: True
+    webassets: True
+    redis: False
+    SQLAlchemy: True
+    
+    If you now install your package now the packages above will be automatically
+    installed as well.
+    
+    e.g. $ pip install -e .
+    
+    In unrestricted environments, you may also install 'MarkupSafe' and
+    'cdecimal' to speed up Jinja2 and SQLAlchemy's queries on Decimal fields
+    respectively. You may also install 'hiredis' if you have opted for the Redis
+    session storage.
+    
+    e.g. $ pip install blueberrypy[speedups]
+    
+    You should also install the appropriate database driver if you have decided
+    to use BlueberryPy's SQLAlchemy support.
+    
+    For more information, the BlueberryPy documentation is available at
+    http://blueberrypy.readthedocs.org.
+    
+    Happy coding!
 
-If you now install your package now the packages above will be automatically
-installed as well.
+###Installing app into environmet
 
-e.g. $ pip install -e .
+    $ pip install -e .
 
-In unrestricted environments, you may also install 'MarkupSafe' and
-'cdecimal' to speed up Jinja2 and SQLAlchemy's queries on Decimal fields
-respectively. You may also install 'hiredis' if you have opted for the Redis
-session storage.
-
-e.g. $ pip install blueberrypy[speedups]
-
-You should also install the appropriate database driver if you have decided
-to use BlueberryPy's SQLAlchemy support.
-
-For more information, the BlueberryPy documentation is available at
-http://blueberrypy.readthedocs.org.
-
-Happy coding!
-
-
-pip install -e .
-2to3 -w env/lib64/python3.2/site-packages/webassets
-pip install mysql-connector-python
+###Running app
+    $ blueberrypy serve [-b 0.0.0.0:7777] [-d]
+      or
+    $ ./init
