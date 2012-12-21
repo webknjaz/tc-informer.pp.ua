@@ -12,8 +12,11 @@
     $ source env/bin/activate
       Install required packages then:
     $ pip install https://bitbucket.org/webknjaz/blueberrypy-wk/get/ced830f454e1.zip
-    $ pip install mysql-connector-python webassets
-    $ 2to3 -w env/lib64/python3.2/site-packages/{blueberrypy,dateutil,webassets}
+    $ pip install mysql-connector-python webassets requests
+    $ sed "s/\\.decode\(.*ascii.*\)//" env/lib/python3.2/site-packages/requests/packages/oauthlib/{common.py,oauth1/rfc5849/utils.py}
+    $ pip install git+https://github.com/saippuakauppias/pyvka.git
+    $ pip install https://bitbucket.org/webknjaz/vkontakte/get/964dcaacfe2f.zip
+    $ 2to3-3.2 -w env/lib64/python3.2/site-packages/{blueberrypy,dateutil,webassets,requests}
 
 ###Note: Project creation log
 
