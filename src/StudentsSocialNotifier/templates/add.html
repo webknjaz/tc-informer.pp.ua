@@ -4,20 +4,19 @@
     {{ super() }}
 {%- endblock head %}
 {% block content -%}
-    <div class="container">
-        <div class="container-fluid">
-            <form action="/admin/add" method="post" class="form">
-                <div class="controls controls-row">
-                        <input name="surname" type="text" class="span2" />
-                        <input name="name" type="text" class="span2" />
-                        <input name="bydad" type="text" class="span2" />
+            <div class="container pagination-centered">
+                <div class="container-fluid">
+                    <form id="main_form" action="/api/add" method="post" class="form form-inline pull-right">
+                        <div class="controls row-fluid">
+                                <input type="text" class="input-small span2" name="name" placeholder="Name" />
+                                <input type="text" class="input-small" name="bydad" placeholder="Middle name" />
+                                <input type="text" class="input-small span2" name="surname" placeholder="Surname" />
+                                <!--input type="text" class="input-medium" name="vk_link" placeholder="http://vk.com/id100500" /-->
+                                <input type="text" class="input-medium" name="vk_link" placeholder="an id of VK user here" />
+                                <input type="submit" class="btn btn-primary" value="Add" />
+                        </div>
+                    </form>
                 </div>
-                <div class="controls controls-row">
-                        <input name="vk_link" type="text" class="span4" placeholder="http://vk.com/id100500" />
-                        <input type="submit" class="btn btn-primary span2" />
-                </div>
-            </form>
-        </div>
-    </div>
-    {{ super() }}
+            </div>
+            {{ super() }}
 {%- endblock content %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Hi, %username%!{%- endblock title %}
+{% block top_menu %}{%- endblock top_menu %}
+{% block head -%}
+    {{ super() }}
+    <style type="text/css">
+    #main {
+        display: table;
+        width: 100%;
+        min-height: 400px;
+    }
+    .all-centered {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        /* bootstrap hack */
+        left: -20px;
+        position: relative;
+    }
+    
+    /* The ghost, nudged to maintain perfect centering */
+    .all-centered:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em; /* Adjusts for spacing */
+    }
+    </style>
+{%- endblock head %}
+{% block content -%}
+            <div class="all-centered">
+                <div class="container pagination-centered">
+                    <div class="well">
+                            Hi, enter your personal information.
+                    </div>
+                    <div class="container-fluid">
+                        <form id="main_form" action="/api/add_admin" method="post" class="form form-inline">
+                            <div class="controls row-fluid">
+                                    <input type="text" class="input-small span2" name="name" placeholder="Name" />
+                                    <input type="text" class="input-small" name="bydad" placeholder="Middle name" />
+                                    <input type="text" class="input-small span2" name="surname" placeholder="Surname" />
+                                    <input type="submit" class="btn btn-primary" value="Add" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{%- endblock content %}

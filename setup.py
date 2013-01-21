@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-install_requires = ['SQLAlchemy', 'yuicompressor', 'webassets', 'mysql-connector-python']
+install_requires = ['SQLAlchemy', 'yuicompressor', 'webassets', 'mysql-connector-python', 'vkontakte', 'pyvka']
 
 setup(name='StudentsSocialNotifier',
       version='1.0',

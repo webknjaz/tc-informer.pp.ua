@@ -2,29 +2,56 @@
 {% block title %}Welcome{% endblock title %}
 {% block head -%}
     {{ super() }}
+    <style type="text/css">
+    table form {
+        margin: 0;
+    }
+    </style>
 {%- endblock head %}
 {% block content -%}
-    Hello World!
-    <table class="table table-striped table-bordered table-hover table-condensed">
-        <caption>Group list</caption>
-        <thead>
-                <th>#</th>
-                <th>Full name</th>
-                <th>VK acc</th>
-        </thead>
-        <tfoot>
-        </tfoot>
-        <tbody>
-            <tr>
-                <td>20.</td>
-                <td>Svyatoslav S Sydorenko</td>
-                <td>http://vk.com/webknjaz</td>
-            </tr>
-            <tr>
-                <td>20.</td>
-                <td>Svyatoslav S Sydorenko</td>
-                <td>http://vk.com/webknjaz</td>
-            </tr>
-        </tbody>
-    </table>
+            <!--div class="well">
+                Wellcome to the notification app!
+            </div-->
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <caption>Users list</caption>
+                <thead>
+                        <th>#</th>
+                        <th>Full name</th>
+                        <th>VK acc</th>
+                        <th style="width: 40px;"></th>
+                </thead>
+                <!--tfoot>
+                    <tr>
+                        <td colspan="3">
+                            Nothing to do here.
+                        </td>
+                    </tr>
+                </tfoot-->
+                <tbody>
+                    {% for u in users %}
+                    <tr id="u_{{ u.id }}">
+                        <td>{{ u.id }}</td>
+                        <td>{{ u.surname }} {{ u.name }} {{ u.bydad }}</td>
+                        <td>{% if u.vk_id is not none %}<a href="http://vk.com/id{{ u.vk_id }}" target="_blank">http://vk.com/id{{ u.vk_id }}</a>{% endif %}</td>
+                        <td class="pagination-centered" style="text-align: center;"><form action="/api/remove" method="post" class="form form-inline removal-form"><div class="controls row-fluid"><button type="submit" class="btn btn-danger"><i class="icon-remove"></i></button><input type="hidden" value="{{ u.id }}" name="uid" ></div></form></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No users found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {#% if pagination is not none %}
+            <div class="pagination pagination-centered pagination-large">
+              <ul>
+                <li class="disabled"><a href="#">Prev</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+              </ul>
+            </div>
+            {% endif %#}
 {%- endblock content %}

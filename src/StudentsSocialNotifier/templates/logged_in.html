@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block top_menu %}{%- endblock top_menu %}
+{% block title %}Hi, %username%!{% endblock title %}
+{% block head -%}
+    {{ super() }}
+{%- endblock head %}
+{% block content -%}
+            <div class="well">
+                Hi, {{ user.surname }} {{ user.name }} {{ user.bydad }}! 
+                You're logged in.
+            </div>
+{%- endblock content %}
