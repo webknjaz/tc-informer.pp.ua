@@ -45,3 +45,4 @@ config/dev/app.yml
 config/prod/app.yml
 *.py.bak
 .hidden
+lock.pid
