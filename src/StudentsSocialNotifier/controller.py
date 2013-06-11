@@ -42,11 +42,17 @@ class Root:
         #   is_app_user, api_id, viewer_id, language, secret, sid,
         #   lc_name, user_id, group_id, api_settings, ad_info,
         #   parent_language, viewer_type
-        from .api import get_users_list
-        session = cherrypy.request.orm_session
-        users = get_users_list(session)
+        # from .api import get_users_list
+        # session = cherrypy.request.orm_session
+        # users = get_users_list(session)
+        # tmpl = get_template("index.html")
+        # return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list', users = users['list'])
+        #from .api import get_users_list
+        #session = cherrypy.request.orm_session
+        #users = get_users_list(session)
         tmpl = get_template("index.html")
-        return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list', users = users['list'])
+        #return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list', users = users['list'])
+        return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list')
 
     @cherrypy.expose
     def logged_in(self, **kwargs):
