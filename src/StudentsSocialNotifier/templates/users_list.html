@@ -1,18 +1,9 @@
-{% extends "base.html" %}
-{% block title %}Welcome{% endblock title %}
+{% extends "index.html" %}
+{% block title %}List of users{% endblock title %}
 {% block head -%}
     {{ super() }}
-    <style type="text/css">
-    table form {
-        margin: 0;
-    }
-    </style>
 {%- endblock head %}
 {% block content -%}
-            <!--div class="well">
-                Wellcome to the notification app!
-            </div-->
-            {#
             <table class="table table-striped table-bordered table-hover table-condensed">
                 <caption>Users list</caption>
                 <thead>
@@ -43,17 +34,4 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {#% if pagination is not none %}
-            <div class="pagination pagination-centered pagination-large">
-              <ul>
-                <li class="disabled"><a href="#">Prev</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
-              </ul>
-            </div>
-            {% endif %#}
-{% include "post.html" %}
 {%- endblock content %}
