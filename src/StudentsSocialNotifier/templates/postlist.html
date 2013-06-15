@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block title %}The posts list{% endblock title %}
+{% block head -%}
+    {{ super() }}
+{%- endblock head %}
+{% block content -%}
+    {% for post in posts %}
+        {% if post.show %}
+            {% include "post.html" %}
+        {% endif %}
+    {% else %}
+        На даний момент записів для відображення немає.
+    {% endfor %}
+{%- endblock content %}

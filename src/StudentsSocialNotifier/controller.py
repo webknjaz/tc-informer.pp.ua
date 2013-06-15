@@ -15,7 +15,7 @@ from .tools import *
 #]
 
 MENU_LIST = [
-    {'id': 'users_list', 'name': 'Users List', 'url': '/list'},
+    {'id': 'users_list', 'name': 'Перелік записів', 'url': '/list'},
     {'id': 'no_users', 'name': 'No users in system', 'url': '/no_users'},     # DEBUG item
     {'id': 'logged_in', 'name': 'Logged in', 'url': '/logged_in'}, # DEBUG item
     {'id': 'add_user', 'name': 'Manage users', 'url': '/admin'}
@@ -50,9 +50,13 @@ class Root:
         #from .api import get_users_list
         #session = cherrypy.request.orm_session
         #users = get_users_list(session)
-        tmpl = get_template("index.html")
+        #tmpl = get_template("index.html")
+        tmpl = get_template("postlist.html")
         #return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list', users = users['list'])
-        return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list')
+        from .api import get_posts_list
+        session = cherrypy.request.orm_session
+        posts_list = get_posts_list(session)
+        return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list', posts = posts_list)
 
     @cherrypy.expose
     def logged_in(self, **kwargs):

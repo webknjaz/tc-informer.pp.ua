@@ -2,7 +2,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from StudentsSocialNotifier.model import User
+from StudentsSocialNotifier.model import User, Post
 
 
 def find_user_by_id(session, id):
@@ -57,3 +57,6 @@ def add_first_user(session, name, surname, bydad):
     session.add(u)
     session.commit()
     return u
+
+def get_posts_list(session, start = 0, ulimit = 20):
+    return session.query(Post).filter(Post.id>start).limit(ulimit)

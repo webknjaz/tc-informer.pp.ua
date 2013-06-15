@@ -74,11 +74,13 @@ class Post(Base):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     title = Column(String(32), nullable=True)
-    content = Column(String(256))
+    content = Column(String(256), nullable=False)
     link = Column(String(256), nullable=True)
-    created = Column(DateTime)
+    created = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
     show = Column(Boolean, default=True)
     author_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+
+    author = relationship("User", backref="posts_written")
 
 
 class Delivery(Base):
