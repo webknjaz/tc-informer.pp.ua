@@ -79,5 +79,5 @@ def add_first_user(session, name, surname, bydad):
     session.commit()
     return u
 
-def get_posts_list(session, start = 0, ulimit = 20):
+def get_posts_list(session, start = 0, ulimit = 5):
     return session.query(Post).filter(Post.id>start).limit(ulimit)
