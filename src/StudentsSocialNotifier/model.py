@@ -115,6 +115,6 @@ class PeriodicDeliveryTask(Base):
         super(PeriodicDeliveryTask, self).__init__(**kwargs)
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    when = Column(DateTime)
+    when = Column(DateTime, nullable = True, default = None)
     todo = Column(JSONEncodedDict(256))
     status = Column(Enum('SCHEDULED', 'FAILED', 'SUCCEDED'), default='SCHEDULED')

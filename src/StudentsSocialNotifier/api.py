@@ -54,6 +54,14 @@ def add_post(session, **kwargs):
     p = Post(**kwargs)
     session.add(p)
     session.commit()
+    
+    users = session.query(User.id).filter(User.id != p.author_id).all()
+    for u in users:
+        d = Delivery(post_id = p.id, user_id = p.author_id)
+        session.add(d)
+        t = PeriodicDeliveryTask(when = None, todo = '{"action":"notify_via_vk"}')
+        session.add(t)
+    session.commit()
     return p
 
 def get_users_list(session, start = 0, ulimit = 20):
