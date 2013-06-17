@@ -115,7 +115,8 @@ $(function(){
         ;
     });
     
-    $('.form.removal-form').submit(function(event){
+    $('#new_msg').submit(function(event){
+        $('.btn.btn-primary').css('after', '<img src="/img/ajax-loader.gif" alt="Loading..." title="Loading..." />');
         event.preventDefault();
         $('.alert .close').click(); // closing previous alert
         $.ajax({
@@ -129,21 +130,21 @@ $(function(){
                 case 'ok':
                     debug('click ok');
                     debug($(this));
-                    $('.table tr#u_' + response.user_id).remove();
                     var alert = '\
                     <div class="alert alert-success">\
                         <button type="button" class="close" data-dismiss="alert">&times;</button>\
-                        <h4>Congrats!</h4>\
+                        <h4>Чудово!</h4>\
                         ' + response.msg + '\
                     </div>\
                     ';
+                    $('#new_msg')[0].reset();
                     break;
                 case 'fail':
                     debug('click fail');
                     var alert = '\
                     <div class="alert alert-error">\
                         <button type="button" class="close" data-dismiss="alert">&times;</button>\
-                        <h4>Fail!</h4>\
+                        <h4>Провал!</h4>\
                         ' + response.msg + '\
                     </div>\
                     ';
@@ -153,25 +154,88 @@ $(function(){
                     var alert = '\
                     <div class="alert alert-error">\
                         <button type="button" class="close" data-dismiss="alert">&times;</button>\
-                        <h4>Fail!</h4>\
-                        User not removed.\
+                        <h4>Провал!</h4>\
+                        Запис не створено.\
                     </div>\
                     ';
                     break;
             }
-            console.log(alert);
-            $(alert).prependTo('.table');
+            $(alert).prependTo('#new_msg');
         })
         .fail(function(response){
             debug('click fail');
             var alert = '\
             <div class="alert alert-error">\
                 <button type="button" class="close" data-dismiss="alert">&times;</button>\
-                <h4>Fail!</h4>\
-                User not removed.\
+                <h4>Провал!</h4>\
+                Запис не створено.\
             </div>\
             ';
-            $(alert).prependTo('.table');
+            $(alert).prependTo('#new_msg');
+        })
+        .always(function(){
+            $('.btn.btn-primary').css('after', '');
+        })
+        ;
+    });
+
+    $('#postlist .form.removal-form').submit(function(event){
+        event.preventDefault();
+        $('.alert .close').click(); // closing previous alert
+        $.ajax({
+           type: 'POST',   
+           url: $(this).attr('action'),   
+           data: $(this).serialize(),
+        })
+        .success(function(response){
+            var alert = '';
+            switch(response.status) {
+                case 'ok':
+                    debug('click ok');
+                    debug($(this));
+                    $('.post#p_' + response.post_id).remove();
+                    var alert = '\
+                    <div class="alert alert-success">\
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>\
+                        <h4>Успіх!</h4>\
+                        ' + response.msg + '\
+                    </div>\
+                    ';
+                    break;
+                case 'fail':
+                    debug('click fail');
+                    var alert = '\
+                    <div class="alert alert-error">\
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>\
+                        <h4>Невдача!</h4>\
+                        ' + response.msg + '\
+                    </div>\
+                    ';
+                    break;
+                default:
+                    debug('unknown fail');
+                    var alert = '\
+                    <div class="alert alert-error">\
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>\
+                        <h4>Невдача!</h4>\
+                        Запис не видалений\
+                    </div>\
+                    ';
+                    break;
+            }
+            console.log(alert);
+            $(alert).prependTo('#postlist');
+        })
+        .fail(function(response){
+            debug('click fail');
+            var alert = '\
+            <div class="alert alert-error">\
+                <button type="button" class="close" data-dismiss="alert">&times;</button>\
+                <h4>Невдача!</h4>\
+                Запис не видалений.\
+            </div>\
+            ';
+            $(alert).prependTo('postlist');
         })
         ;
     });
