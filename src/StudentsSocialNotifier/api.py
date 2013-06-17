@@ -2,9 +2,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from StudentsSocialNotifier.model import User, Post
+from StudentsSocialNotifier.model import User, Post, PeriodicDeliveryTask, Delivery
 import cherrypy
 
+from sqlalchemy import desc
 
 def find_user_by_id(session, id):
     id = int(id)
@@ -49,19 +50,25 @@ def add_post(session, **kwargs):
             'content': kwargs['msg'],
             'author_id': cherrypy.session.get('user')['id'],
     }
-    logger.debug(kwargs)
     
     p = Post(**kwargs)
     session.add(p)
     session.commit()
     
     users = session.query(User.id).filter(User.id != p.author_id).all()
-    for u in users:
-        d = Delivery(post_id = p.id, user_id = p.author_id)
-        session.add(d)
-        t = PeriodicDeliveryTask(when = None, todo = '{"action":"notify_via_vk"}')
-        session.add(t)
-    session.commit()
+    for (u,) in users:
+        try:
+            d = Delivery(post_id = p.id, user_id = u)
+            session.add(d)
+            session.commit()
+        except:
+            pass
+        try:
+            t = PeriodicDeliveryTask(when = None, todo = {'action':'notify_via_vk','deliver_to':u})
+            session.add(t)
+            session.commit()
+        except:
+            pass
     return p
 
 def get_users_list(session, start = 0, ulimit = 20):
@@ -88,4 +95,4 @@ def add_first_user(session, name, surname, bydad):
     return u
 
 def get_posts_list(session, start = 0, ulimit = 5):
-    return session.query(Post).filter(Post.id>start).limit(ulimit)
+    return session.query(Post).order_by(desc(Post.created)).offset(start).limit(ulimit)
