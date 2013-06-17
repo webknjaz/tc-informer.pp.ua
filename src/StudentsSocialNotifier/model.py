@@ -73,9 +73,9 @@ class Post(Base):
         super(Post, self).__init__(**kwargs)
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    title = Column(String(32), nullable=True)
+    title = Column(String(32), nullable=True, default=None)
     content = Column(String(256), nullable=False)
-    link = Column(String(256), nullable=True)
+    link = Column(String(256), nullable=True, default=None)
     created = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
     show = Column(Boolean, default=True)
     author_id = Column(Integer, ForeignKey('users.id'), nullable=False)

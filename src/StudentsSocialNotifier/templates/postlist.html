@@ -4,6 +4,7 @@
     {{ super() }}
 {%- endblock head %}
 {% block content -%}
+    <div class="container-fluid" id="postlist">
     {% for post in posts %}
         {% if post.show %}
             {% include "post.html" %}
@@ -11,4 +12,5 @@
     {% else %}
         На даний момент записів для відображення немає.
     {% endfor %}
+    </div>
 {%- endblock content %}

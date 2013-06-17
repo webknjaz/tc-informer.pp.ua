@@ -3,6 +3,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from StudentsSocialNotifier.model import User, Post
+import cherrypy
 
 
 def find_user_by_id(session, id):
@@ -17,6 +18,11 @@ def delete_user_by_id(session, id):
     id = int(id)
     return session.query(User)\
         .filter(User.id == id).delete()
+
+def delete_post_by_id(session, id):
+    id = int(id)
+    return session.query(Post)\
+        .filter(Post.id == id).delete()
 
 def add_user(session, name, surname, bydad, vk_id):
     """adding user to db"""
@@ -34,6 +40,21 @@ def add_user(session, name, surname, bydad, vk_id):
     session.add(u)
     session.commit()
     return u
+
+def add_post(session, **kwargs):
+    """adding user to db"""
+    assert kwargs.get('msg') is not None
+
+    kwargs = {
+            'content': kwargs['msg'],
+            'author_id': cherrypy.session.get('user')['id'],
+    }
+    logger.debug(kwargs)
+    
+    p = Post(**kwargs)
+    session.add(p)
+    session.commit()
+    return p
 
 def get_users_list(session, start = 0, ulimit = 20):
     return {

@@ -18,7 +18,8 @@ MENU_LIST = [
     {'id': 'users_list', 'name': 'Перелік записів', 'url': '/list'},
     {'id': 'no_users', 'name': 'No users in system', 'url': '/no_users'},     # DEBUG item
     {'id': 'logged_in', 'name': 'Logged in', 'url': '/logged_in'}, # DEBUG item
-    {'id': 'add_user', 'name': 'Manage users', 'url': '/admin'}
+    {'id': 'add_user', 'name': 'Manage users', 'url': '/admin'},
+    {'id': 'add_post', 'name': 'Написати запис', 'url': '/new_post'},
 ]
 
 #def menu_item(fn, *args, **kwargs):
@@ -91,6 +92,14 @@ class Root:
 #            pagination.append({'id': kwargs.get('start') - 20, 'name': 'Prev', 'url': '/'})
 #        pagination = users['count'] if users['count'] > 20 else None
         return tmpl.render(menu_items = MENU_LIST, menu_item = 'add_user', users = users['list'])
+
+    @cherrypy.expose
+    def new_post(self, **kwargs):
+        from .api import get_users_list
+        #session = cherrypy.request.orm_session
+        #users = get_users_list(session)
+        tmpl = get_template("writepost.html")
+        return tmpl.render(menu_items = MENU_LIST, menu_item = 'add_post') #, users = users['list'])
 
 #class Admin:
 #    """administrative interface"""
@@ -206,6 +215,51 @@ class API:
     def default(self, *args):
         return {'status': 'error', 'error_id': 404, 'msg': 'This URL is not accessible!'}
         #return self.index()
+
+    @cherrypy.expose
+    def remove_post(self, pid, **kwargs):
+        #assert cherrypy.request.method == 'POST', 'POST queries are only accepted'
+        ret_obj = None
+        try:
+            from .api import delete_post_by_id
+            session = cherrypy.request.orm_session
+            res = delete_post_by_id(session, id = uid)
+            ret_obj = {
+                        'status': 'ok', 
+                        'msg': 'Post removed successfully!', 
+                        'post_id': pid
+            }
+        except:
+            ret_obj = {
+                        'status': 'fail',
+                        'msg': 'This post does not exist.'
+                        }
+        return ret_obj
+
+    @cherrypy.expose
+    def add_post(self, new_message, **kwargs):
+        #assert cherrypy.request.method == 'POST', 'POST queries are only accepted'
+        ret_obj = None
+        try:
+            from .api import add_post
+            session = cherrypy.request.orm_session
+            post = add_post(session, msg = new_message, **kwargs)
+            ret_obj = {
+                        'status': 'ok', 
+                        'msg': 'User added successfully!', 
+                        'post': {
+                                'id': post.id, 
+                                'name': post.title or '',
+                                'content': post.content,
+                                'created': post.created.strftime('%Y-%m-%d %H:%M:%S'),
+                                }
+            }
+        except:
+            ret_obj = {
+                        'status': 'fail',
+                        'msg': 'Smth went wrong.'
+                        }
+        return ret_obj
 
 #Root.admin = Admin()
 Root.api = API()

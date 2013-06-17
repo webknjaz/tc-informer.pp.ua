@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block title %}Adding new post{% endblock title %}
+{% block head -%}
+    {{ super() }}
+{%- endblock head %}
+{% block content -%}
+            <div class="container">
+                {% include 'post_form.html' %}
+            </div>
+{%- endblock content %}
