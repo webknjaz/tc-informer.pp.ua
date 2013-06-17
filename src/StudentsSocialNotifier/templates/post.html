@@ -14,7 +14,9 @@
     {% endif %}
     <div>
         <span class="badge badge-info"><i class="icon-calendar icon-white"></i> <time pubdate datetime="{{ post.created.strftime('%Y-%m-%dT%H:%M:%S +02:00') }}">{{ post.created.strftime('%Y-%m-%d %H:%M:%S') }}</time></span>
-        <div class="pull-right"><!--i class="icon-tags"></i--> <a href="#" class="read_post"><span class="label label-success">позначити прочитаним</span></a> <!--span class="label">alice</span> <span class="label">story</span> <span class="label">blog</span> <span class="label">personal</span--></div>
+        <form action="/api/remove_post" class="form remove-post-form" id="rmp{{ post.id }}"><input type="hidden" name="pid" value="{{ post.id }}" />
+            <div class="pull-right"><!--i class="icon-tags"></i--> <a id="rmp{{ post.id }}" href="#" class="read_post"><span class="label label-success">позначити прочитаним</span></a> <!--span class="label">alice</span> <span class="label">story</span> <span class="label">blog</span> <span class="label">personal</span--></div>
+        </form>
     </div> 
     <hr>
 </div>

@@ -223,7 +223,7 @@ class API:
         try:
             from .api import delete_post_by_id
             session = cherrypy.request.orm_session
-            res = delete_post_by_id(session, id = uid)
+            res = delete_post_by_id(session, id = pid)
             ret_obj = {
                         'status': 'ok', 
                         'msg': 'Post removed successfully!', 
