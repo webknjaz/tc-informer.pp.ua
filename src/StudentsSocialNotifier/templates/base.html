@@ -94,13 +94,13 @@
                         <a class="brand" href="/" style="padding-top: 9px; padding-bottom: 8px;"><img src="/img/app_logo.png" /></a><!-- костиль -->
                         {% block top_menu %}
                         {% if user %}
-                        <p style="margin-right: 5px;" class="navbar-text pull-right"><i class="icon-user"></i> Привіт, {{ user.name }}!</p>
+                        <p style="margin-right: 5px;" class="navbar-text pull-right"><!--i class="icon-user"></i--> Привіт, {{ user.name }}!</p>
                         {% if menu_items is not none and user.is_admin %}
                         <!--div class="nav-collapse collapse"-->
                         <div class="nav">
                             <ul class="nav">
                             {% for item in menu_items %}
-                                <li class="{% if item.id == menu_item %}active {%endif%}"><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                <li class="{% if item.id == menu_item %}active {%endif%}"><a href="{{ item.url }}"><i class="icon-{{ item.icon }}"></i> {{ item.name }}</a></li>
                             {% endfor %}
                             </ul>
                         </div>

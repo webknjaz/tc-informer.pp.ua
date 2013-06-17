@@ -15,11 +15,11 @@ from .tools import *
 #]
 
 MENU_LIST = [
-    {'id': 'users_list', 'name': 'Перелік записів', 'url': '/list'},
-    #{'id': 'no_users', 'name': 'Чиста система', 'url': '/no_users'},     # DEBUG item
-    #{'id': 'logged_in', 'name': 'Увійшов', 'url': '/logged_in'}, # DEBUG item
-    {'id': 'add_user', 'name': 'Керування користувачами', 'url': '/admin'},
-    {'id': 'add_post', 'name': 'Написати запис', 'url': '/new_post'},
+        {'id': 'users_list', 'name': 'Перелік записів', 'url': '/list', 'icon': 'list'},
+    #{'id': 'no_users', 'name': 'Чиста система', 'url': '/no_users', 'icon': ''},     # DEBUG item
+    #{'id': 'logged_in', 'name': 'Увійшов', 'url': '/logged_in', 'icon': ''}, # DEBUG item
+    {'id': 'add_user', 'name': 'Керування користувачами', 'url': '/admin', 'icon': 'user'},
+    {'id': 'add_post', 'name': 'Написати запис', 'url': '/new_post', 'icon': 'align-justify'},
 ]
 
 #def menu_item(fn, *args, **kwargs):
