@@ -16,9 +16,9 @@ from .tools import *
 
 MENU_LIST = [
     {'id': 'users_list', 'name': 'Перелік записів', 'url': '/list'},
-    {'id': 'no_users', 'name': 'No users in system', 'url': '/no_users'},     # DEBUG item
-    {'id': 'logged_in', 'name': 'Logged in', 'url': '/logged_in'}, # DEBUG item
-    {'id': 'add_user', 'name': 'Manage users', 'url': '/admin'},
+    #{'id': 'no_users', 'name': 'Чиста система', 'url': '/no_users'},     # DEBUG item
+    #{'id': 'logged_in', 'name': 'Увійшов', 'url': '/logged_in'}, # DEBUG item
+    {'id': 'add_user', 'name': 'Керування користувачами', 'url': '/admin'},
     {'id': 'add_post', 'name': 'Написати запис', 'url': '/new_post'},
 ]
 
