@@ -89,7 +89,9 @@
                         <a class="brand" href="/">Students Social Notifier</a-->
                         <a class="brand" href="/" style="padding-top: 9px; padding-bottom: 8px;"><img src="/img/app_logo.png" /></a><!-- костиль -->
                         {% block top_menu %}
-                        {% if menu_items is not none %}
+                        {% if user %}
+                        <p style="margin-right: 5px;" class="navbar-text pull-right"><i class="icon-user"></i> Привіт, {{ user.name }}!</p>
+                        {% if menu_items is not none and user.is_admin %}
                         <!--div class="nav-collapse collapse"-->
                         <div class="nav">
                             <ul class="nav">
@@ -98,6 +100,7 @@
                             {% endfor %}
                             </ul>
                         </div>
+                        {% endif %}
                         {% endif %}
                         {% endblock %}
                     </div>

@@ -57,7 +57,7 @@ class Root:
         from .api import get_posts_list
         session = cherrypy.request.orm_session
         posts_list = get_posts_list(session)
-        return tmpl.render(menu_items = MENU_LIST, menu_item = 'users_list', posts = posts_list)
+        return tmpl.render(user = cherrypy.session['user'], menu_items = MENU_LIST, menu_item = 'users_list', posts = posts_list)
 
     @cherrypy.expose
     def logged_in(self, **kwargs):
@@ -91,7 +91,7 @@ class Root:
 #        if kwargs.get('start') and kwargs.get('start') < 20:
 #            pagination.append({'id': kwargs.get('start') - 20, 'name': 'Prev', 'url': '/'})
 #        pagination = users['count'] if users['count'] > 20 else None
-        return tmpl.render(menu_items = MENU_LIST, menu_item = 'add_user', users = users['list'])
+        return tmpl.render(user = cherrypy.session['user'], menu_items = MENU_LIST, menu_item = 'add_user', users = users['list'])
 
     @cherrypy.expose
     def new_post(self, **kwargs):
@@ -99,7 +99,7 @@ class Root:
         #session = cherrypy.request.orm_session
         #users = get_users_list(session)
         tmpl = get_template("writepost.html")
-        return tmpl.render(menu_items = MENU_LIST, menu_item = 'add_post') #, users = users['list'])
+        return tmpl.render(user = cherrypy.session['user'], menu_items = MENU_LIST, menu_item = 'add_post') #, users = users['list'])
 
 #class Admin:
 #    """administrative interface"""
