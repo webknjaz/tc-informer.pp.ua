@@ -76,7 +76,7 @@ class Post(Base):
     title = Column(String(32), nullable=True, default=None)
     content = Column(String(256), nullable=False)
     link = Column(String(256), nullable=True, default=None)
-    created = Column(DateTime, default=datetime.utcnow, server_default=text("now()"), nullable=False)
+    created = Column(DateTime, default=datetime.utcnow, nullable=False)
     show = Column(Boolean, default=True)
     author_id = Column(Integer, ForeignKey('users.id'), nullable=False)
 
